@@ -4,10 +4,24 @@ $user=new User();
 
 $room_cat=$_GET['roomname'];
 
+session_start();
+
+$id=$_SESSION[ 'user_id']; 
+$iduser=$_SESSION[ 'user_id'];
+$user_id=$_SESSION[ 'user_id'];
+
+
+if(!isset($_SESSION["user_id"]))
+{
+	header("location:admin/login.php");
+}
+
 
 $query=$user->db->query("SELECT * FROM hotels WHERE roomname='$room_cat'");
 $row = $query->fetch();
  
+error_reporting( ~E_NOTICE ); // avoid notice
+require_once 'include/db_config.php';
 
 if(isset($_REQUEST[ 'submit'])) 
 { 
@@ -22,7 +36,74 @@ if(isset($_REQUEST[ 'submit']))
 
    
 } 
+//---------------------------IMG--------------------------------//
+
+if(isset($_POST['submit']))
+{
+ 
+ $legend = $_POST['legend'];// user email
+ 
+ $imgFile = $_FILES['user_image']['name'];
+ $tmp_dir = $_FILES['user_image']['tmp_name'];
+ $imgSize = $_FILES['user_image']['size'];
+ 
+ 
+  if(empty($legend)){
+  $errMSG = "Please Enter Your Job Work.";
+ }
+ else if(empty($imgFile)){
+  $errMSG = "Please Select Image File.";
+ }
+ else
+ {
+  $upload_dir = '../image-php-form/user_images/'; // upload directory
+
+  $imgExt = strtolower(pathinfo($imgFile,PATHINFO_EXTENSION)); // get image extension
+ 
+  // valid image extensions
+  $valid_extensions = array('jpeg', 'jpg', 'png', 'gif'); // valid extensions
+ 
+  // rename uploading image
+  $userpic = rand(1000,1000000).".".$imgExt;
+   
+  // allow valid image file formats
+  if(in_array($imgExt, $valid_extensions)){   
+   // Check file size '300kb'
+   if($imgSize < 350000)    {
+    move_uploaded_file($tmp_dir,$upload_dir.$userpic);
+   }
+   else{
+    $errMSG = "Sorry, your file is too large. Check file size to be 300KB.";
+   }
+  }
+  else{
+   $errMSG = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";  
+  }
+ }
+ 
+ 
+ // if no error occured, continue ....
+ if(!isset($errMSG))
+ {
+  $stmt = $connect->prepare('INSERT INTO images(userID,legend,userPic) VALUES( :uids,:ujob, :upic)');
+  $stmt->bindParam(':uids',$user_id);
+  $stmt->bindParam(':ujob',$legend);
+  $stmt->bindParam(':upic',$userpic);
+  
+  if($stmt->execute())
+  {
+   $successMSG = "new record succesfully inserted ...";
+   header("refresh:2;../admin.php"); // redirects image view page after 5 seconds.
+  }
+  else
+  {
+   $errMSG = "error while inserting....";
+  }
+ }
+}
 ?>
+
+<!-- ---------------------------/IMG-------------------------------- -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -89,7 +170,7 @@ if(isset($_REQUEST[ 'submit']))
                         </label>                          
                 </div>
             <hr>
-            <form action="" method="post" name="hotels">
+            <form action="" method="post" enctype="multipart/form-data" name="hotels">
                 <div class="form-group">
                     <h6><label for="roomname">Hotel Name:</label></h6>
                     <input type="text" class="form-control" name="roomname" value="<?php echo $row['roomname'] ?>" required>
@@ -126,9 +207,6 @@ if(isset($_REQUEST[ 'submit']))
                       <option value="double">double</option>
                     </select>
                 </div>
-                <!--
-                PHP image form
-                -->
                 <div class="form-group">
                     <h6><label for="Facility">Description</label></h6>
                     <textarea class="form-control" rows="5" name="facility"><?php echo $row['facility'] ?></textarea>
@@ -137,11 +215,20 @@ if(isset($_REQUEST[ 'submit']))
                     <h6><label for="price">Price Per Night:</label></h6>
                     <input type="text" class="form-control" name="price" value="<?php echo $row['price'] ?>" required>
                 </div>
+                <div class="form-group">
+                    <h6><label for="legend">Legend:</label></h6>
+                    <input class="form-control" type="text" name="legend" placeholder="Your Profession" value="<?php echo "Here goes yours image legend"; ?>" />
+                </div>
+                <div class="form-group">
+                    <h6><label for="user_image">Profile Img.</label></h6>
+                    <input class="input-group" type="file" name="user_image" accept="image/*" />
+                </div>
+
                 <button style="float: right;" type="submit" class="btn btn-lg btn-primary button" name="submit">Update</button>
 
                
                 <div id="click_here" >
-                        <button  type="button" onclick="location.href='../admin.php'" class="btn btn-lg btn-success button">Back to Admin Panel</button>
+                        <button  type="button"  class="btn btn-lg btn-success button">Back to Admin Panel</button>
                 </div>
 
 

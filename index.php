@@ -51,9 +51,19 @@ if(isset($_SESSION["user_name"], $_SESSION["user_id"]))
             background: rgba(0,0,0,0.7);
             border: none;
             width: 98%;
-            height: 28vh;
+            height: 48vh;
             left: 1%;
+            display: inline-table;
     
+        }
+        .splitscreen {
+            display:flex;
+        }
+        .splitscreen .left {
+            flex: 1;
+        }
+        .splitscreen .right {
+            flex: 1;
         }
         .wellfix
         {
@@ -79,6 +89,7 @@ if(isset($_SESSION["user_name"], $_SESSION["user_id"]))
           }
           h6
           {
+
               color: navajowhite;
               font-family:  monospace;
           }
@@ -86,6 +97,9 @@ if(isset($_SESSION["user_name"], $_SESSION["user_id"]))
         .container{
             width: 100%;
             height: 100%;
+        }
+        .alert-warning {
+            width: 30%;
         }
 		
     </style>
@@ -123,25 +137,43 @@ if(isset($_SESSION["user_name"], $_SESSION["user_id"]))
         </nav>
   
 <?php
-        
+
 
         $result = $connect->query('SELECT * FROM hotels');
         if($result)
         {   
-            if(($result-> rowCount()) > 0)
+            if(($result-> rowCount()) > 0 )
             {
-            //               ********************************************** Show Room Category***********************
-                while ($row = $result->fetch())
-                {
+
+            
                     
+                while (($row = $result->fetch()))
+                {
+                    $stmt = $connect->prepare('SELECT legend, userPic FROM images WHERE userID=:uids  LIMIT 1 ');
+                    $stmt->bindParam(':uids',$row['id']);
+                    $stmt->execute();
+
+                    if($stmt->rowCount() > 0)
+                    {
+                    while($img_row=$stmt->fetch())
+                    {
+                    extract($img_row);
+
                     echo "
                             <div class='row'>
                             <div class='col-md-3'></div>
                             <div class='col-md-6 well'>
                                 <h4 class='post'>".$row['roomname']."</h4><hr>
-                                <h6>No of Beds: ".$row['no_bed']." ".$row['bedtype']." bed.</h6>
-                                <h6>Description: ".$row['facility']."</h6>
-                                <h6>Price: ".$row['price']." &euro;/night.</h6>
+                                <div class='splitscreen'>
+                                <div class='left'>
+                                <img  src='image-php-form/user_images/".$img_row['userPic']."' class='img-rounded' width='60%' />
+                                </div>  
+                                <div class='right'>
+                                    <h6>No of Beds: ".$row['no_bed']." ".$row['bedtype']." bed.</h6>
+                                    <h6>Description: ".$row['facility']."</h6><br><br><br><br><br><br>
+                                    <h6>Price: ".$row['price']." &euro;/night.</h6>
+                                </div>  
+
                             </div>  
                             </div>
                             
@@ -151,11 +183,37 @@ if(isset($_SESSION["user_name"], $_SESSION["user_id"]))
                          "; //echo end
                     
                     
+                }}else{
+                    echo "
+                            <div class='row'>
+                            <div class='col-md-3'></div>
+                            <div class='col-md-6 well'>
+                                <h4 class='post'>".$row['roomname']."</h4><hr>
+                                <div class='splitscreen'>
+                                <div class='left'>
+                                <div class='alert alert-warning'>
+                                        <span class='glyphicon glyphicon-info-sign'></span> &nbsp; No Image Found ...
+                                        </div>
+                                </div>  
+                                <div class='right'>
+                                    <h6>No of Beds: ".$row['no_bed']." ".$row['bedtype']." bed.</h6>
+                                    <h6>Description: ".$row['facility']."</h6><br><br><br><br><br><br>
+                                    <h6>Price: ".$row['price']." &euro;/night.</h6>
+                                </div>  
+
+                            </div>  
+                            </div>
+                            
+                            
+                        
+                    
+                         ";
+
                 }
                 
                 
                           
-            }
+            }}
             else
             {
                 echo "NO Data Exist";

@@ -19,6 +19,8 @@ if(isset($_SESSION["user_name"], $_SESSION["user_id"]))
 	$user_name = $_SESSION["user_name"];
 	$user_id = $_SESSION["user_id"];
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -47,6 +49,7 @@ if(isset($_SESSION["user_name"], $_SESSION["user_id"]))
                 background: rgba(0, 0, 0, 0.7);
                 border: none;
                 height: 200px;
+                display: inline-table;
             }
             
             
@@ -128,7 +131,70 @@ if(isset($_SESSION["user_name"], $_SESSION["user_id"]))
                         <li><a href="user-record.php">Edit your business</a></li>
                     </ul>
                 </div>
-                <div class="col-md-3"></div>
+                </div>
+                
+<!-- ---------------------------IMG-------------------------------- -->
+            <?php
+                require_once 'admin/include/db_config.php';
+                if(isset($_GET['delete_id']))
+                {
+                // select image from db to delete
+                $stmt_select = $connect->prepare('SELECT userPic FROM images WHERE userPic =:uid');
+                $stmt_select->execute(array(':uid'=>$_GET['delete_id']));
+                $imgRow=$stmt_select->fetch(PDO::FETCH_ASSOC);
+                unlink("image-php-form/user_images/".$imgRow['userPic']);
+                
+                // it will delete an actual record from db
+                $stmt_delete = $connect->prepare('DELETE FROM images WHERE userPic =:uid');
+                $stmt_delete->bindParam(':uid',$_GET['delete_id']);
+                $stmt_delete->execute();
+                
+                header("Location: admin.php");
+                }
+                ?>
+
+
+                    <?php
+                    
+                    $stmt = $connect->prepare('SELECT userID, legend, userPic FROM images ORDER BY userID DESC');
+                    $stmt->execute();
+                    
+                    if($stmt->rowCount() > 0)
+                    {
+                    while($row=$stmt->fetch(PDO::FETCH_ASSOC))
+                    {
+                    extract($row);
+                    ?>
+
+                <div class='row'>
+                     <div class='col-md-3'></div>
+                        <div class='col-md-6 well'>
+                        <h4 ><?php echo "Legend: ".$legend; ?></h4>
+                        <img src="image-php-form/user_images/<?php echo $row['userPic']; ?>" class="img-rounded" width="30%"  /> 
+                        <a class="btn" style="color: #ffbb2b;" href="?delete_id=<?php echo $row['userPic']; ?>" title="click for delete" onclick="return confirm('sure to delete ?')"><span class="glyphicon glyphicon-remove-circle"></span> Delete</a>
+
+                    </div>    
+                    </div>   
+
+                    <?php
+                    }
+                    }
+                    else
+                    {
+                    ?>
+                            <div class='row'>
+                            <div class='col-md-3'></div>
+                                <div class='col-md-6 well'>
+                                    <div class="alert alert-warning">
+                                        <span class="glyphicon glyphicon-info-sign"></span> &nbsp; No Image Found ...
+                                        </div>
+                                        </div>    
+                                    </div> 
+
+                    <?php
+                    }
+                    ?>
+
             </div> 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

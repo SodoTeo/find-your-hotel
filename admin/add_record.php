@@ -28,14 +28,14 @@ if(isset($_REQUEST[ 'submit']))
 { 
     extract($_REQUEST); 
 
-    $result=$connect->prepare("INSERT INTO hotels SET roomname='$roomname', room_qnty='$room_qnty', no_bed='$no_bed', bedtype='$bedtype', facility='$facility', price='$price'");
+    $result=$connect->prepare("INSERT INTO hotels SET roomname='$roomname', room_qnty='$room_qnty', no_bed='$no_bed', bedtype='$bedtype', facility='$facility', price='$price', id='$user_id'");
     $result->execute() or die(print_r($result->errorInfo()."Data cannot inserted", true));
 
     if($result)
     {
         echo "<script type='text/javascript'>
               alert('Entry Added Succesfully');
-              window.location.replace('../admin.php');
+              
          </script>";
     }
     else
@@ -43,7 +43,79 @@ if(isset($_REQUEST[ 'submit']))
          echo $result;
     }
 } 
+
+
+//---------------------------IMG--------------------------------//
+
+ error_reporting( ~E_NOTICE ); // avoid notice
+ require_once 'include/db_config.php';
+ 
+ if(isset($_POST['submit']))
+ {
+  
+  $legend = $_POST['legend'];// user email
+  
+  $imgFile = $_FILES['user_image']['name'];
+  $tmp_dir = $_FILES['user_image']['tmp_name'];
+  $imgSize = $_FILES['user_image']['size'];
+  
+  
+   if(empty($legend)){
+   $errMSG = "Please Enter Your Job Work.";
+  }
+  else if(empty($imgFile)){
+   $errMSG = "Please Select Image File.";
+  }
+  else
+  {
+   $upload_dir = '../image-php-form/user_images/'; // upload directory
+ 
+   $imgExt = strtolower(pathinfo($imgFile,PATHINFO_EXTENSION)); // get image extension
+  
+   // valid image extensions
+   $valid_extensions = array('jpeg', 'jpg', 'png', 'gif'); // valid extensions
+  
+   // rename uploading image
+   $userpic = rand(1000,1000000).".".$imgExt;
+    
+   // allow valid image file formats
+   if(in_array($imgExt, $valid_extensions)){   
+    // Check file size '300kb'
+    if($imgSize < 350000)    {
+     move_uploaded_file($tmp_dir,$upload_dir.$userpic);
+    }
+    else{
+     $errMSG = "Sorry, your file is too large. Check file size to be 300KB.";
+    }
+   }
+   else{
+    $errMSG = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";  
+   }
+  }
+  
+  
+  // if no error occured, continue ....
+  if(!isset($errMSG))
+  {
+   $stmt = $connect->prepare('INSERT INTO images(userID,legend,userPic) VALUES( :uids,:ujob, :upic)');
+   $stmt->bindParam(':uids',$user_id);
+   $stmt->bindParam(':ujob',$legend);
+   $stmt->bindParam(':upic',$userpic);
+   
+   if($stmt->execute())
+   {
+    $successMSG = "new record succesfully inserted ...";
+    header("refresh:2;../admin.php"); // redirects image view page after 5 seconds.
+   }
+   else
+   {
+    $errMSG = "error while inserting....";
+   }
+  }
+ }
 ?>
+
+<!-- ---------------------------/IMG-------------------------------- -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -102,7 +174,7 @@ if(isset($_REQUEST[ 'submit']))
                         </label>                          
                 </div>
             <hr>
-            <form action="" method="post" name="hotels">
+            <form action="" method="post" enctype="multipart/form-data" name="hotels">
                 <div class="form-group">
                     <h6><label for="roomname">Hotel Name:</label></h6>
                     <input type="text" class="form-control" name="roomname" placeholder="super delux" required>
@@ -144,7 +216,16 @@ if(isset($_REQUEST[ 'submit']))
                     <h6><label for="price">Price Per Night:</label></h6>
                     <input type="text" class="form-control" name="price" required>
                 </div>
-                <button style="float: right;" type="submit" class="btn btn-lg btn-primary button" name="submit" onclick="location.href = '../admin.php';" value="Add Room">Add</button>
+                <div class="form-group">
+                    <h6><label for="legend">Legend:</label></h6>
+                    <input class="form-control" type="text" name="legend" placeholder="Your Profession" value="<?php echo "Here goes yours image legend"; ?>" />
+                </div>
+                <div class="form-group">
+                    <h6><label for="user_image">Profile Img.</label></h6>
+                    <input class="input-group" type="file" name="user_image" accept="image/*" />
+                </div>
+        
+                <button style="float: right;" type="submit" class="btn btn-lg btn-primary button" name="submit"  value="Add Room">Add</button>
                 <div id="click_here" >
                         <button  type="button" onclick="location.href='../admin.php'" class="btn btn-lg btn-success button">Back to Admin Panel</button>
                 </div>
