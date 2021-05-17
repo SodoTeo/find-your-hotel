@@ -146,6 +146,7 @@
                                     { 
                                         window.location.replace("../admin.php");
                                     }
+                                    
                                 }
                                 $('#action').val(data.next_action);
                             }

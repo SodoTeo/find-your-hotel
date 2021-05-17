@@ -76,6 +76,7 @@
 			'error'			=>	$error,
 			'next_action'	=>	$next_action
 		);
+		
 		echo json_encode($output);
 	}
 ?>

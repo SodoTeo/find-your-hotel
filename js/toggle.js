@@ -12,6 +12,7 @@ $('input').on('change', function() {
 });
 
 chk.addEventListener('change', () => {
+  
   document.cookie = 'theme=' +''+ ';expires=Thu, 01 Jan 1970 00:00:00 UTC;';
   var endDate = new Date();
   endDate.setFullYear(endDate.getFullYear() + 10);

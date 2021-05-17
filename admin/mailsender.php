@@ -86,7 +86,6 @@
 			}	
 			else
 			{
-
 				$mail = new PHPMailer(TRUE);
 				$mail->IsSMTP();
 				$mail->Host = 'smtp.gmail.com';

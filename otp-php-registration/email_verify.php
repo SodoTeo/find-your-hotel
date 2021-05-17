@@ -1,4 +1,5 @@
 <?php
+
 	//email_verify.php
 	require_once '../admin/include/db_config.php';
 
