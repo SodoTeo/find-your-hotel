@@ -28,12 +28,12 @@
                 }
             }
 
-            public function edit_room_cat($roomname, $room_qnty, $no_bed, $bedtype,$facility,$price,)
+            public function edit_room_cat($h_name, $room_qnty, $no_bed, $bedtype, $facility, $price, $room_cat,$rating, $phone, $address, $prefecture)
             {
-                    
+ 
                         
                  
-                         $send=$this->db->prepare("UPDATE hotels  SET roomname='$roomname', room_qnty='$room_qnty', no_bed='$no_bed', bedtype='$bedtype', facility='$facility', price='$price' WHERE roomname='$roomname'");
+                         $send=$this->db->prepare("UPDATE hotels  SET h_name='$h_name', room_qnty='$room_qnty', no_bed='$no_bed', bedtype='$bedtype',  price='$price', facility='$facility', price='$price', rating='$rating', phone='$phone', address='$address', prefecture='$prefecture' WHERE h_name='$h_name'");
                          $send->execute() or die(print_r($send->errorInfo()."Data cannot be updated", true));
                         if($send)
                         {
@@ -52,18 +52,18 @@
             }
             
 
-            public function add_room($roomname, $room_qnty, $no_bed, $bedtype,$facility,$price)
+            public function add_room($h_name, $room_qnty, $no_bed, $bedtype,$facility,$price)
             {
 
                 
-                    $sql=$this->db->prepare("INSERT INTO hotels SET roomname='$roomname', room_qnty='$room_qnty', no_bed='$no_bed', bedtype='$bedtype', facility='$facility', price='$price'");
+                    $sql=$this->db->prepare("INSERT INTO hotels SET h_name='$h_name', room_qnty='$room_qnty', no_bed='$no_bed', bedtype='$bedtype', facility='$facility', price='$price'");
                     $sql->execute() or die(print_r($sql->errorInfo()."Data cannot inserted", true));
                 
                 
                     for($i=0;$i<$room_qnty;$i++)
                     {
                         
-                        $sql2=$this->db->prepare("INSERT INTO hotels SET roomname='$roomname'");
+                        $sql2=$this->db->prepare("INSERT INTO hotels SET h_name='$h_name'");
                         $sql2->execute();
                         
                         

@@ -1,64 +1,61 @@
 <?php
+	//email_verify.php
+	require_once '../admin/include/db_config.php';
 
-//email_verify.php
+	$error_user_otp = '';
+	$user_activation_code = '';
+	$message = '';
 
-$connect = new PDO("mysql:host=localhost;dbname=booking", "root", "");
-
-$error_user_otp = '';
-$user_activation_code = '';
-$message = '';
-
-if(isset($_GET["code"]))
-{
-	$user_activation_code = $_GET["code"];
-
-	if(isset($_POST["submit"]))
+	if(isset($_GET["code"]))
 	{
-		if(empty($_POST["user_otp"]))
+		$user_activation_code = $_GET["code"];
+
+		if(isset($_POST["submit"]))
 		{
-			$error_user_otp = 'Enter OTP Number';
-		}
-		else
-		{
-			$query = "
-			SELECT * FROM register_user 
-			WHERE user_activation_code = '".$user_activation_code."' 
-			AND user_otp = '".trim($_POST["user_otp"])."'
-			";
-
-			$statement = $connect->prepare($query);
-
-			$statement->execute();
-
-			$total_row = $statement->rowCount();
-
-			if($total_row > 0)
+			if(empty($_POST["user_otp"]))
+			{
+				$error_user_otp = 'Enter OTP Number';
+			}
+			else
 			{
 				$query = "
-				UPDATE register_user 
-				SET user_email_status = 'verified' 
-				WHERE user_activation_code = '".$user_activation_code."'
+				SELECT * FROM register_user 
+				WHERE user_activation_code = '".$user_activation_code."' 
+				AND user_otp = '".trim($_POST["user_otp"])."'
 				";
 
 				$statement = $connect->prepare($query);
 
-				if($statement->execute())
+				$statement->execute();
+
+				$total_row = $statement->rowCount();
+
+				if($total_row > 0)
 				{
-					header('location:../admin/login.php?register=success');
+					$query = "
+					UPDATE register_user 
+					SET user_email_status = 'verified' 
+					WHERE user_activation_code = '".$user_activation_code."'
+					";
+
+					$statement = $connect->prepare($query);
+
+					if($statement->execute())
+					{
+						header('location:../admin/login.php?register=success');
+					}
 				}
-			}
-			else
-			{
-				$message = '<label class="text-danger">Invalid OTP Number</label>';
+				else
+				{
+					$message = '<label class="text-danger">Invalid OTP Number</label>';
+				}
 			}
 		}
 	}
-}
-else
-{
-	$message = '<label class="text-danger">Invalid Url</label>';
-}
-
+	else
+	{
+		$message = '<label class="text-danger">Invalid Url</label>';
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -69,7 +66,7 @@ else
     	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	</head>
 	<body>
-		<br />
+		<br/>
 		<div class="container">
 			<h3 align="center">PHP Registration with Email Verification using OTP</h3>
 			<br />

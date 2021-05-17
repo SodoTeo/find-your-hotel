@@ -29,23 +29,17 @@ if(isset($_SESSION["user_name"], $_SESSION["user_id"]))
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
     <title>InfoHotel</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+
     
     
     <style>
-
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300&display=swap');
         .well
         {
             background: rgba(0,0,0,0.7);
@@ -85,13 +79,14 @@ if(isset($_SESSION["user_name"], $_SESSION["user_id"]))
             margin-right: 15px;
         }
         h4 {
-              color: #ffbb2b;
+            color: #ff964f;
+            
           }
           h6
           {
-
-              color: navajowhite;
-              font-family:  monospace;
+              font-size: 150%;
+              color: #ff964f;
+              font-family: 'Crimson Pro', serif;
           }
         
         .container{
@@ -163,14 +158,19 @@ if(isset($_SESSION["user_name"], $_SESSION["user_id"]))
                             <div class='row'>
                             <div class='col-md-3'></div>
                             <div class='col-md-6 well'>
-                                <h4 class='post'>".$row['roomname']."</h4><hr>
+                                <h4 class='post'>".$row['h_name']."</h4><hr>
                                 <div class='splitscreen'>
                                 <div class='left'>
                                 <img  src='image-php-form/user_images/".$img_row['userPic']."' class='img-rounded' width='60%' />
                                 </div>  
                                 <div class='right'>
-                                    <h6>No of Beds: ".$row['no_bed']." ".$row['bedtype']." bed.</h6>
-                                    <h6>Description: ".$row['facility']."</h6><br><br><br><br><br><br>
+                                    <h6>No of Rooms: ".$row['room_qnty']."0 </h6>
+                                    <h6>No of Beds: ".$row['no_bed']." ".$row['bedtype']." bed</h6>
+                                    <h6>Address: ".$row['address']." </h6>
+                                    <h6>Prefecture: ".$row['prefecture']." </h6>
+                                    <h6>Contact: ".$row['phone']." </h6>
+                                    <h6>Rating (stars): ".$row['rating']." </h6>
+                                    <h6>Description: ".$row['facility']."</h6><br>
                                     <h6>Price: ".$row['price']." &euro;/night.</h6>
                                 </div>  
 
@@ -188,7 +188,7 @@ if(isset($_SESSION["user_name"], $_SESSION["user_id"]))
                             <div class='row'>
                             <div class='col-md-3'></div>
                             <div class='col-md-6 well'>
-                                <h4 class='post'>".$row['roomname']."</h4><hr>
+                                <h4 class='post'>".$row['h_name']."</h4><hr>
                                 <div class='splitscreen'>
                                 <div class='left'>
                                 <div class='alert alert-warning'>
@@ -196,8 +196,13 @@ if(isset($_SESSION["user_name"], $_SESSION["user_id"]))
                                         </div>
                                 </div>  
                                 <div class='right'>
-                                    <h6>No of Beds: ".$row['no_bed']." ".$row['bedtype']." bed.</h6>
-                                    <h6>Description: ".$row['facility']."</h6><br><br><br><br><br><br>
+                                    <h6>No of Rooms: ".$row['room_qnty']."0 </h6>
+                                    <h6>No of Beds: ".$row['no_bed']." ".$row['bedtype']." bed</h6>
+                                    <h6>Address: ".$row['address']." </h6>
+                                    <h6>Prefecture: ".$row['prefecture']." </h6>
+                                    <h6>Contact: ".$row['phone']." </h6>
+                                    <h6>Rating (stars): ".$row['rating']." </h6>
+                                    <h6>Description: ".$row['facility']."</h6><br>
                                     <h6>Price: ".$row['price']." &euro;/night.</h6>
                                 </div>  
 

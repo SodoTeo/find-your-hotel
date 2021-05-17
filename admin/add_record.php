@@ -1,5 +1,5 @@
 <?php
-
+require_once 'include/db_config.php';
 session_start();
 
 $id=$_SESSION[ 'user_id']; 
@@ -28,7 +28,7 @@ if(isset($_REQUEST[ 'submit']))
 { 
     extract($_REQUEST); 
 
-    $result=$connect->prepare("INSERT INTO hotels SET roomname='$roomname', room_qnty='$room_qnty', no_bed='$no_bed', bedtype='$bedtype', facility='$facility', price='$price', id='$user_id'");
+    $result=$connect->prepare("INSERT INTO hotels SET h_name='$h_name', room_qnty='$room_qnty', no_bed='$no_bed', bedtype='$bedtype', facility='$facility', price='$price', id='$user_id', rating='$rating', phone='$phone', address='$address', prefecture='$prefecture'");
     $result->execute() or die(print_r($result->errorInfo()."Data cannot inserted", true));
 
     if($result)
@@ -48,7 +48,7 @@ if(isset($_REQUEST[ 'submit']))
 //---------------------------IMG--------------------------------//
 
  error_reporting( ~E_NOTICE ); // avoid notice
- require_once 'include/db_config.php';
+ 
  
  if(isset($_POST['submit']))
  {
@@ -105,7 +105,7 @@ if(isset($_REQUEST[ 'submit']))
    if($stmt->execute())
    {
     $successMSG = "new record succesfully inserted ...";
-    header("refresh:2;../admin.php"); // redirects image view page after 5 seconds.
+    header("refresh:2;../admin.php"); // redirects image view page after 2 seconds.
    }
    else
    {
@@ -135,6 +135,22 @@ if(isset($_REQUEST[ 'submit']))
             background: rgba(0,0,0,0.7);
             border: none;
             width: 98%;
+        }
+        .splitscreen {
+            display:flex;
+        }
+        .splitscreen .left {
+            padding: 10px;
+            
+            flex: 1;
+        }
+        .splitscreen .centre {
+            padding: 10px;
+            flex: 1;
+        }
+        .splitscreen .right {
+            padding: 10px;
+            flex: 1;
         }
 		p
 		{
@@ -176,58 +192,101 @@ if(isset($_REQUEST[ 'submit']))
             <hr>
             <form action="" method="post" enctype="multipart/form-data" name="hotels">
                 <div class="form-group">
-                    <h6><label for="roomname">Hotel Name:</label></h6>
-                    <input type="text" class="form-control" name="roomname" placeholder="super delux" required>
+                    <h6><label for="h_name">Hotel Name:</label></h6>
+                    <input type="text" class="form-control" name="h_name" placeholder="super delux" required>
                 </div>
-                 <div class="form-group">
-                    <h6><label for="qty">No of Rooms:</label>&nbsp;</h6>
-                    <select name="room_qnty">
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                       <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <h6><label for="bed">No of Bed:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
-                    <select name="no_bed">
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <h6><label for="bedtype">Bed Type:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
-                   <select name="bedtype">
-                      <option value="single">single</option>
-                      <option value="double">double</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <h6><label for="Facility">Description</label></h6>
-                    <textarea class="form-control" rows="5" name="facility"></textarea>
-                </div>
-               <div class="form-group">
-                    <h6><label for="price">Price Per Night:</label></h6>
-                    <input type="text" class="form-control" name="price" required>
-                </div>
-                <div class="form-group">
-                    <h6><label for="legend">Legend:</label></h6>
-                    <input class="form-control" type="text" name="legend" placeholder="Your Profession" value="<?php echo "Here goes yours image legend"; ?>" />
-                </div>
-                <div class="form-group">
-                    <h6><label for="user_image">Profile Img.</label></h6>
-                    <input class="input-group" type="file" name="user_image" accept="image/*" />
+                <div class='splitscreen'>
+                    <div class='left'>
+                        <div class="form-group">
+                            <h6><label for="qty">No of Rooms:</label>&nbsp;</h6>
+                            <select name="room_qnty">
+                            <option value="1">10</option>
+                            <option value="2">20</option>
+                            <option value="3">30</option>
+                            <option value="4">40</option>
+                            <option value="5">50</option>
+                            <option value="6">60</option>
+                            <option value="7">70</option>
+                            <option value="8">80</option>
+                            <option value="9">90</option>
+                            <option value="10">100</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <h6><label for="bed">No of Bed:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
+                            <select name="no_bed">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <h6><label for="bedtype">Bed Type:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
+                        <select name="bedtype">
+                            <option value="single">single</option>
+                            <option value="double">double</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <h6><label for="rating">Rating(stars):</label>&nbsp;</h6>
+                            <select name="rating">
+                            <option value="1">*</option>
+                            <option value="2">**</option>
+                            <option value="3">***</option>
+                            <option value="4">****</option>
+                            <option value="5">*****</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class='centre'>
+                        <div class="form-group">
+                            <h6><label for="phone">Phone:</label></h6>
+                            <input type="text" class="form-control" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <h6><label for="price">Price Per Night:</label></h6>
+                            <input type="text" class="form-control" name="price" required>
+                        </div>
+                        <div class="form-group">
+                            <h6><label for="address">Address:</label></h6>
+                            <input type="text" class="form-control" name="address" required>
+                        </div>
+                        <div class="form-group">
+                            <h6><label for="prefecture">Prefecture:</label>&nbsp;</h6>
+                            <select name="prefecture">
+                            <option value="Νομός Αθηνών">Νομός Αθηνών</option>
+                            <option value="Νομός Ανατολικής Αττικής">Νομός Ανατολικής Αττικής</option>
+                            <option value="Νομός Δυτικής Αττικής">Νομός Δυτικής Αττικής</option>
+                            <option value="Νομός Πειραιά">Πειραιάς</option>
+                            <option value="Νομός Θεσσαλονίκης">Νομός Θεσσαλονίκης</option>
+                            <option value="Νομός Χανίων">Νομός Χανίων</option>
+                            <option value="Νομός Ηρακλείου">Νομός Ηρακλείου</option>
+                            <option value="Νομός Ζακύνθου">Νομός Ζακύνθου</option>
+                            <option value="Νομός Λάρισας">Νομός Λάρισας</option>
+                            <option value="Νομός Φλώρινας">Νομός Φλώρινας</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class='right'>
+                        <div class="form-group">
+                            <h6><label for="Facility">Description</label></h6>
+                            <textarea class="form-control" rows="5" name="facility"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <h6><label for="legend">Legend for image:</label></h6>
+                            <input class="form-control" type="text" name="legend" placeholder="Your Profession" value="<?php echo "Here goes yours image legend"; ?>" />
+                        </div>
+                        <div class="form-group">
+                            <h6><label for="user_image">Profile Img.</label></h6>
+                            <input class="input-group" type="file" name="user_image" accept="image/*" />
+                        </div>
+                    </div>
                 </div>
         
-                <button style="float: right;" type="submit" class="btn btn-lg btn-primary button" name="submit"  value="Add Room">Add</button>
+                <button style="float:right; top: 80%; right: 15%;" type="submit" class="btn btn-lg btn-primary button" name="submit"  value="Add Room">Add</button>
                 <div id="click_here" >
-                        <button  type="button" onclick="location.href='../admin.php'" class="btn btn-lg btn-success button">Back to Admin Panel</button>
+                        <button style="top: 80%; left: 15%;" type="button" onclick="location.href='../admin.php'" class="btn btn-lg btn-success button">Back to Admin Panel</button>
                 </div>
             </form>
         </div>
