@@ -11,7 +11,7 @@ if(!isset($_SESSION["user_id"]))
 	header("location:admin/login.php");
 }
 
-include('include/db_config.php');
+
 
 
 $user_name = '';
@@ -254,16 +254,14 @@ if(isset($_REQUEST[ 'submit']))
                         <div class="form-group">
                             <h6><label for="prefecture">Prefecture:</label>&nbsp;</h6>
                             <select name="prefecture">
-                            <option value="Νομός Αθηνών">Νομός Αθηνών</option>
-                            <option value="Νομός Ανατολικής Αττικής">Νομός Ανατολικής Αττικής</option>
-                            <option value="Νομός Δυτικής Αττικής">Νομός Δυτικής Αττικής</option>
-                            <option value="Νομός Πειραιά">Πειραιάς</option>
-                            <option value="Νομός Θεσσαλονίκης">Νομός Θεσσαλονίκης</option>
-                            <option value="Νομός Χανίων">Νομός Χανίων</option>
-                            <option value="Νομός Ηρακλείου">Νομός Ηρακλείου</option>
-                            <option value="Νομός Ζακύνθου">Νομός Ζακύνθου</option>
-                            <option value="Νομός Λάρισας">Νομός Λάρισας</option>
-                            <option value="Νομός Φλώρινας">Νομός Φλώρινας</option>
+                            <option value="Νομός Αθηνών">Athens</option>
+                            <option value="Νομός Πειραιά">Pireas</option>
+                            <option value="Νομός Θεσσαλονίκης">Thessaloniki</option>
+                            <option value="Νομός Χανίων">Chania</option>
+                            <option value="Νομός Ηρακλείου">Heraklion</option>
+                            <option value="Νομός Ζακύνθου">Zakynthos</option>
+                            <option value="Νομός Λάρισας">Larisa</option>
+                            <option value="Νομός Φλώρινας">Florina</option>
                             </select>
                         </div>
                     </div>

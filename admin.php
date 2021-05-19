@@ -227,7 +227,7 @@
                 ?>
                     <?php
                     
-                    $stmt = $connect->prepare('SELECT userID, legend, userPic FROM images ORDER BY userID DESC');
+                    $stmt = $connect->prepare("SELECT userID, legend, userPic FROM images WHERE userID LIKE $iduser ");
                     $stmt->execute();
                     
                     if($stmt->rowCount() > 0)
