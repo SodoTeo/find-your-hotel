@@ -35,7 +35,7 @@ $Fun_call = New Functions();
                 <form method="post" autocomplete="off">
                     <div class="form-row justify-content-center">
                         <div class="form-group col-sm-12 col-lg-10 mb-0">
-                            <input type="text" id="search_key" class="form-control" placeholder="Search Now" maxlength="100">
+                            <input type="text" id="search_key" name="search_key" class="form-control" placeholder="Search Now" maxlength="100">
                         </div>
                     </div>
                 </form>

@@ -10,7 +10,6 @@ $view_rec = 0;
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     if(isset($_POST['search_keyword']) && !empty(trim($_POST['search_keyword']))){
-
         $search_key = $Fun_call->validate($_POST['search_keyword']);
         $search_key = strtolower($search_key);
 
