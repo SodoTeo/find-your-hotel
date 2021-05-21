@@ -65,6 +65,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<script src="http://code.jquery.com/jquery.js"></script>
     	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<style>
+			body{
+				background: linear-gradient(150deg, rgba(255, 165, 150, 0.5) 5%, rgba(0, 228, 255, 0.35));
+				repeat : no-repeat;
+				height: 100vh;
+			}
+		</style>
 	</head>
 	<body>
 		<br/>
