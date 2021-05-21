@@ -181,14 +181,14 @@
                                 <h6><label for="prefecture">Prefecture:</label>&nbsp;</h6>
                                 <select name="prefecture">
                                 <option value="<?php echo $row['prefecture'] ?>"><?php echo $row['prefecture'] ?></option>
-                                <option value="Νομός Αθηνών">Athens</option>
-                                <option value="Νομός Πειραιά">Pireas</option>
-                                <option value="Νομός Θεσσαλονίκης">Thessaloniki</option>
-                                <option value="Νομός Χανίων">Chania</option>
-                                <option value="Νομός Ηρακλείου">Heraklion</option>
-                                <option value="Νομός Ζακύνθου">Zakynthos</option>
-                                <option value="Νομός Λάρισας">Larisa</option>
-                                <option value="Νομός Φλώρινας">Florina</option>
+                                <option value="Athens">Athens</option>
+                                <option value="Pireas">Pireas</option>
+                                <option value="Thessaloniki">Thessaloniki</option>
+                                <option value="Chania">Chania</option>
+                                <option value="Heraklion">Heraklion</option>
+                                <option value="Zakynthos">Zakynthos</option>
+                                <option value="Larisa">Larisa</option>
+                                <option value="Florina">Florina</option>
                                 </select>
                             </div>
                         </div>

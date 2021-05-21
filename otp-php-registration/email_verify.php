@@ -68,7 +68,6 @@
 		<style>
 			body{
 				background: linear-gradient(150deg, rgba(255, 165, 150, 0.5) 5%, rgba(0, 228, 255, 0.35));
-				repeat : no-repeat;
 				height: 100vh;
 			}
 		</style>
