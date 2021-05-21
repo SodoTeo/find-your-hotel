@@ -11,6 +11,14 @@
         $user_name = $_SESSION["user_name"];
         $user_id = $_SESSION["user_id"];
     }
+
+    
+
+    require_once 'live-search/Live-Search/Config/Functions.php';
+    $Fun_call = New Functions();
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -76,7 +84,9 @@
             width: 30%;
         }
     </style>
+    <link rel="stylesheet" href="css/searchbar.css">
     <link rel="stylesheet" href="css/toggle.css">
+
     </head>
     <body >
         <div class="container">    
@@ -85,6 +95,19 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="index.php">Home</a></li>
                         <li><a href="admin.php">Admin</a></li>
+                        
+
+                    <li>
+                        <form method="post" autocomplete="off">
+                        <div class="form-row justify-content-center">
+                            <div class="form-group col-sm-12 col-lg-10 mb-0">
+                            <div class="searchbar">
+                                <input type="text" onmouseover="myFunction()" id="search_key" class="form-control" placeholder="Search Now" maxlength="100">
+                            <div>
+                            </div>
+                        </div>
+                        </form>
+                        </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="toggle">
@@ -105,6 +128,66 @@
                     </ul>
                 </div>
             </nav>
+            <span id="search_msg" class="ser-msg"></span>
+
+            
+
+        
+
+
+        
+            <div id="record_load" style="display: none;">
+
+            </div>
+            <script type="text/javascript">
+                    function myFunction() {
+                    var x = document.getElementById("record_load");
+                    if (x.style.display === "none") {
+
+                        x.style.display = "block";
+                    } 
+                    }
+                    function myClose() {
+                    var x = document.getElementById("record_load");
+                    
+                        x.style.display = "none";
+
+                    }
+
+
+                    $(document).ready(function (){
+
+                        $('#record_load').load('live-search/Live-Search/Ajax/Records.php');
+
+                        $('#search_key').keyup(function (){
+
+                            $search_data = $(this).val().trim();
+
+                            if($search_data != '' && $search_data.match(/^[a-zA-Z0-9 ]*$/)){
+
+                                $('#search_msg').text('');
+                                $('#record_load').load('live-search/Live-Search/Ajax/Records.php', { 'search_keyword' : encodeURIComponent($search_data) });
+                            
+                            }
+                            else{
+
+                                $('#record_load').load('live-search/Live-Search/Ajax/Records.php');
+                                if(!$search_data.match(/^[a-zA-Z]*$/)){
+                                    $('#search_msg').text('Only Alphabet & Numbers Are Allow');
+                                }
+                                if($search_data == ''){
+                                    $('#search_msg').text('');
+                                }
+                            }
+
+                        });
+
+                    });
+                </script>
+
+
+
+
             <?php
 
                 $result = $connect->query('SELECT * FROM hotels');
@@ -141,9 +224,11 @@
                                                     <h6>Rating (stars): ".$row['rating']." </h6>
                                                     <h6>Description: ".$row['facility']."</h6><br>
                                                     <h6>Price: ".$row['price']." &euro;/night.</h6>
+                                                    
                                                 </div>  
 
                                             </div>  
+                                            </div>
                                             </div>
                                             
                                             
@@ -175,9 +260,11 @@
                                                 <h6>Rating (stars): ".$row['rating']." </h6>
                                                 <h6>Description: ".$row['facility']."</h6><br>
                                                 <h6>Price: ".$row['price']." &euro;/night.</h6>
+                                                
                                             </div>  
 
                                         </div>  
+                                        </div>
                                         </div>
                                         
                                         
@@ -204,5 +291,10 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/toggle.js" defer></script>
+
+
+
+
+
     </body>
 </html>

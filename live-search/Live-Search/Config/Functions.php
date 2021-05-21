@@ -20,6 +20,7 @@ class Functions{
         }
 
     }
+    
 
     public function validate($string){
         try{
@@ -42,7 +43,7 @@ class Functions{
 
     public function select_order($tbl_name, $field_id, $order='ASC'){
 
-        $select = "SELECT * FROM $tbl_name ORDER BY $field_id $order";
+        $select = "SELECT * FROM $tbl_name ORDER BY $field_id $order LIMIT 1";
         $query = $this->conn->query($select);
         if($query->rowCount() > 0){
             $select_fetch = $query->fetchAll();
@@ -58,6 +59,7 @@ class Functions{
         }
 
     }
+
 
 	public function search($tblname, $search_val, $op="AND"){
 

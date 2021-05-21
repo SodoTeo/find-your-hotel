@@ -61,7 +61,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>PHP Registration with Email Verification using OTP</title>
+		<title>Email Verification using OTP</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<script src="http://code.jquery.com/jquery.js"></script>
     	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -69,7 +69,7 @@
 	<body>
 		<br/>
 		<div class="container">
-			<h3 align="center">PHP Registration with Email Verification using OTP</h3>
+			<h3 align="center">Email Verification using OTP</h3>
 			<br />
 			<div class="panel panel-default">
 				<div class="panel-heading">
