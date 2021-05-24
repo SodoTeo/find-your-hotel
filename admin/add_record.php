@@ -61,7 +61,7 @@ if(isset($_REQUEST[ 'submit']))
   
   
    if(empty($legend)){
-   $errMSG = "Please Enter Your Job Work.";
+   $errMSG = "Please Enter Your legend.";
   }
   else if(empty($imgFile)){
    $errMSG = "Please Select Image File.";

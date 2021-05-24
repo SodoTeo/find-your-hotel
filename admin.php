@@ -35,7 +35,7 @@
         $imgSize = $_FILES['user_image']['size'];
         
         if(empty($legend)){
-            $errMSG = "Please Enter Your Job Work.";
+            $errMSG = "Please Enter Your legend.";
         }
         else if(empty($imgFile)){
             $errMSG = "Please Select Image File.";
@@ -46,7 +46,7 @@
             $imgExt = strtolower(pathinfo($imgFile,PATHINFO_EXTENSION)); // get image extension
             
             // valid image extensions
-            $valid_extensions = array('jpeg', 'jpg', 'png', 'gif'); // valid extensions
+            $valid_extensions = array('jpg'); // valid extensions
             
             // rename uploading image
             $userpic = rand(1000,1000000).".".$imgExt;
@@ -62,7 +62,7 @@
                 }
             }
             else{
-                $errMSG = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";  
+                $errMSG = "Sorry, only JPG files are allowed.";  
             }
         }
         
