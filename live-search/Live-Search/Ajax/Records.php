@@ -133,7 +133,8 @@ echo json_encode($json_data);
                                                                     <i class='fas fa-euro-sign'></i>
                                                                     <div class='value'><?php echo $view_data['price']?>/Night</div>
                                                                 </div>
-                                                            </div>  
+                                                            </div> 
+                                                            <button style="float:right" id="closeS" onclick="myClose()" type="button" class="btn btn-danger">Close</button> 
                                                         </div>
                                                     </div>  
                                                 </div>
@@ -199,6 +200,7 @@ echo json_encode($json_data);
                                       <?php
                                 }
                             }
+                            
 
  }}else{ echo "<tr><td colspan='6'><h2>Record Not Found</h2></td></tr>"; } ?>
 
