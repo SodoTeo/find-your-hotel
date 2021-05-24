@@ -82,26 +82,74 @@ echo json_encode($json_data);
                                 while($img_row=$stmt->fetch())
                                 {
                                     extract($img_row);?>
+                                            
                                             <div class='row'>
                                             <div class='col-md-3'></div>
                                             <div class='col-md-6 well'>
                                                 <h4 class='post'><?php echo $view_data['h_name']; ?></h4><hr>
+                                                
                                                 <div class='splitscreen'>
                                                 <div class='left'>
-                                                <img  src='image-php-form/user_images/<?php echo $img_row['userPic']; ?>' class='img-rounded' width='60%' />
+                                                <img  src='image-php-form/user_images/<?php echo$img_row['userPic']; ?>' class='img-rounded' width='70%' left='10%' />
                                                 </div>  
+                                                
                                                 <div class='right'>
-                                                    <h6>No of Rooms: <?php echo $view_data['room_qnty']; ?>0 </h6>
-                                                    <h6>No of Beds: <?php echo$view_data['no_bed'],$view_data['bedtype']; ?> bed</h6>
-                                                    <h6>Address: <?php echo $view_data['address']; ?> </h6>
-                                                    <h6>Prefecture:<?php echo$view_data['prefecture']; ?> </h6>
-                                                    <h6>Contact: <?php echo $view_data['phone']; ?> </h6>
-                                                    <h6>Rating (stars): <?php echo$view_data['rating']; ?> </h6>
-                                                    <h6>Description: <?php echo$view_data['facility']; ?></h6><br>
-                                                    <h6>Price: <?php echo $view_data['price']; ?> &euro;/night.</h6>
-                                                    <button style="float:right" id="closeS" onclick="myClose()" type="button" class="btn btn-danger">Close</button>
-                                                </div>  
+                                                <br>
+                                                
+                                                                     
 
+                                                <textarea  rows='5' style='overflow:auto; width:100%;'>
+<?php echo$view_data['facility']; ?>
+                                                                    </textarea>
+                                                                    <br>
+                                                                    <div class='stats'>
+                                                                    
+                                                                    <div>
+                                                                        
+                                                                    <div class='title'>Address</div>
+                                                                    <i class='fas fa-road'></i>
+                                                                       <div class='value'><?php echo$view_data['address']; ?></div>
+                                                                     </div>
+                                                                     
+
+                                                                  
+                                                                    <div>
+                                                                       <div class='title'>Contact</div>
+                                                                       <i class='fas fa-phone'></i>
+                                                                       <div class='value'><?php echo$view_data['phone']; ?></div>
+                                                                     </div>
+                                                                     <div>
+                                                                       <div class='title'>Rooms</div>
+                                                                       <i class='fas fa-cubes'></i>
+                                                                       <div class='value'><?php echo$view_data['room_qnty']; ?>0</div>
+                                                                     </div>
+                                                                     <div>
+                                                                       <div class='title'>Beds</div>
+                                                                       <i class='fas fa-bed'></i>
+                                                                       <div class='value'><?php echo$view_data['no_bed'],$view_data['bedtype']; ?></div>
+                                                                     </div>
+                                                 
+                                                                     <div>
+                                                                       <div class='title'>Stars</div>
+                                                                       <i class='fas fa-star'></i>
+                                                                       <div class='value'><?php echo$view_data['rating']; ?></div>
+                                                                     </div>
+                                                              
+                                                                 <div>
+                                                                     <div class='title'>Prefecture</div>
+                                                                     <i class='fas fa-map-marker-alt'></i>
+                                                                     <div class='value'><?php echo$view_data['prefecture']; ?></div>
+                                                                 </div>
+                                                                 <div>
+                                                                   <div class='title'>Price</div>
+                                                                   <i class='fas fa-euro-sign'></i>
+                                                                   <div class='value'><?php echo$view_data['price']; ?>/Night</div>
+                                                                 </div>
+                                                                 <button style="float:right" id="closeS" onclick="myClose()" type="button" class="btn btn-danger">Close</button>
+                                                
+                                                    
+                                                </div>  
+                                            </div>
                                             </div>  
                                             </div>
                                             </div>
