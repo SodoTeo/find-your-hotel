@@ -91,8 +91,8 @@
 				$mail->Host = 'smtp.gmail.com';
 				$mail->Port = '587';
 				$mail->SMTPAuth = true;
-				$mail->Username = 'acctest21a3@gmail.com';
-				$mail->Password = 'teonsont@uth.gr';
+				$mail->Username = 'Your_email_acc';
+				$mail->Password = 'Your_password';
 				$mail->SMTPSecure = 'tls';
 				$mail->From = 'acctest21a3@gmail.com';
 				$mail->FromName = 'Acount Tester';
